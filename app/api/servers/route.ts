@@ -6,7 +6,7 @@ import { MemberRole } from "@prisma/client";
 
 export async function POST(req: Request){
     try{
-        const{name,imageUrl}=await req.json();
+        const{name,ImageUrl}=await req.json();
         const profile=await currentProfile();
 
         if(!profile){
@@ -16,7 +16,7 @@ export async function POST(req: Request){
         const server=await db.server.create({
             data:{
                 name,
-                imageUrl,
+                
                 profileId:profile.id,
                 inviteCode:uuidv4(),
                 channels:{
@@ -30,11 +30,12 @@ export async function POST(req: Request){
                 members:{
                     create:[
                         {
-                            profileId:profile.userId,
-                            role:MemberRole.OWNER
+                            profileId:profile.id,
+                            
                         }
                     ]
-                }
+                },
+                imageUrl:ImageUrl
             }
         });
         return NextResponse.json(server);
