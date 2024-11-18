@@ -26,8 +26,10 @@ FormControl,
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button' 
 import { FileUpload } from "@/components/file-upload";
+
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import { ModeToggle } from "../mode-toggle";
 
 
 
@@ -36,12 +38,14 @@ const FormSchema = z.object({
   ImageUrl:z.string().url({message:'Invalid URL'}),});
 
 export const CreateServerModal = () => {
-  const {isOpen ,onClose ,type}=useModal();
+  const { isOpen ,onClose ,type}=useModal();
   const router= useRouter();  
+
+  
 
   const isModalOpen = isOpen && type === "createServer";
     
-
+  
   const form =useForm ({
     resolver:zodResolver(FormSchema),
     defaultValues: {
@@ -49,25 +53,26 @@ export const CreateServerModal = () => {
       ImageUrl: '',
     }
   });
-
+  
   const isLoading = form.formState.isSubmitting;
   const onSubmit =async(values:z.infer<typeof FormSchema>) => {
     try{
       await axios.post("/api/servers ",values);
-
+      
       form.reset();
       router.refresh();
-        onClose();
+      onClose();
     }catch(error){
       console.error(error);
     }
   }
-
+  
   const handleClose=()=>{
     form.reset();
     onClose();
   }
-
+  
+  console.log(isModalOpen);
 
     return (
       <Dialog open={isModalOpen} onOpenChange={handleClose}>
@@ -90,11 +95,14 @@ export const CreateServerModal = () => {
                   render={({field}) => (
                     <FormItem>
                       <FormControl>
-                        <FileUpload
+                         <FileUpload
                         endpoint="serverImage"
                         value={field.value}
                         onChange={field.onChange}
-                        />
+                        /> 
+                       
+                        
+                        {/* //TODO: fix vanishing sidebad due to this */}
                       </FormControl>
                     </FormItem>
                   )}

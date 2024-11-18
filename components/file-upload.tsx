@@ -2,19 +2,46 @@
 import { X } from "lucide-react";
 import Image from "next/image";
 import { UploadDropzone } from "@/lib/uploadthing";
+import { useEffect } from "react";
 
-import "@uploadthing/react/styles.css";
+//import styles from '@uploadthing/react/styles.css'
+
 
 interface FileUploadProps {
     
+    
     onChange:(url?:string)=>void;
     value:string
-    endpoint:"messageFile"|"serverImage"
+    endpoint: "messageFile"|"serverImage";
 }
 
 export const FileUpload = (
     {onChange,value,endpoint}:FileUploadProps
 ) => {
+
+    useEffect((): void => {
+        const loadStyles = async () => {
+          try {
+            await import('@uploadthing/react/styles.css');
+          } catch (err) {
+            console.error('Failed to load UploadThing styles', err);
+          }
+        };
+    
+        loadStyles();
+    
+        // Optional: If you want to clean up the styles after the component unmounts
+        return async () => {
+          const styleSheet = document.querySelector(`link[href*="uploadthing/react/styles.css"]`);
+          console.log('styleSheet', styleSheet);
+          if (!styleSheet) {
+            console.log('Removing UploadThing styles');
+            
+            await import('../app/globals.css');
+          }
+        };
+      }, []);
+   
 
     const fileType=value?.split('.').pop();
 
@@ -34,7 +61,7 @@ export const FileUpload = (
                     <X className="h-4 w-4"/>
                 </button>
             </div>
-        )
+        );
     }
 
 
@@ -45,5 +72,5 @@ export const FileUpload = (
             onChange(res?.[0].url);
         }}
         />
-    )
+    );
 }

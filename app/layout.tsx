@@ -37,8 +37,8 @@ export default function RootLayout({
           storageKey="discord-theme"
           >
           {children}
-          </ThemeProvider>
           <ModalProvider/>
+          </ThemeProvider>
         </body> 
       </html>
     </ClerkProvider>
