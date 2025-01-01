@@ -29,13 +29,14 @@ import { FileUpload } from "@/components/file-upload";
 
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
-import { ModeToggle } from "../mode-toggle";
+
 
 
 
 const FormSchema = z.object({
   name:z.string().min(1,{message:'Name is required'}),
-  ImageUrl:z.string().url({message:'Invalid URL'}),});
+  ImageUrl:z.string().url({message:'Invalid URL'}),
+});
 
 export const CreateServerModal = () => {
   const { isOpen ,onClose ,type}=useModal();

@@ -10,6 +10,7 @@ import { NavigationItem } from "./navigation-item";
 import { ModeToggle } from "../mode-toggle";
 import { UserButton } from "@clerk/nextjs";
 
+
 export const NavigationSidebar =async() => {
 
     const profile=await currentProfile();
@@ -48,7 +49,9 @@ export const NavigationSidebar =async() => {
                 ))}
             </ScrollArea>
             <div className="pb-3 mx-auto flex items-center  flex-col gap-y-4">
-                <ModeToggle />
+                
+                    <ModeToggle />
+                
                 <UserButton 
                 afterSignOutUrl="/"
                 appearance={{

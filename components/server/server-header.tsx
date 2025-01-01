@@ -6,6 +6,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { ChevronDown, LogOut, PlusCircle, Settings, TrashIcon, User, UserPlus, Users } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
 
+import { useState } from "react";
+
 
 
 interface ServerHeaderProps{
@@ -20,13 +22,16 @@ export const ServerHeader = ({
 
     const {onOpen}=useModal();
 
+    const[open,setOpen]=useState(false);
+
+
     const isAdmin = role === MemberRole.OWNER;
     const isModerator = role === MemberRole.MODERATOR || isAdmin;
 
     console.log(role, isModerator);
     
     return(
-        <DropdownMenu> 
+        <DropdownMenu open={open} onOpenChange={setOpen} > 
             <DropdownMenuTrigger className="focus:outline-none" asChild>
 
                 <button className="w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover: bg-zinc-700/50 transition">
@@ -38,7 +43,7 @@ export const ServerHeader = ({
             <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]"> 
             {isModerator && (
                 <DropdownMenuItem
-                    onClick={()=>onOpen("invite",{server})}
+                    onClick={()=>{onOpen("invite",{server});setOpen(false)}}
                     className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer "
                 >
                     Invite People
@@ -48,7 +53,7 @@ export const ServerHeader = ({
             
             {isAdmin && (
                 <DropdownMenuItem
-                onClick={()=>onOpen("editServer",{server})}
+                onClick={()=>{onOpen("editServer",{server});setOpen(false)}}
                     className="  px-3 py-2 text-sm cursor-pointer "
                 >
                     Server Settings
@@ -57,7 +62,7 @@ export const ServerHeader = ({
             )}
             {isAdmin && (
                 <DropdownMenuItem
-                onClick={()=>onOpen("members",{server})}
+                onClick={()=>{onOpen("members",{server});setOpen(false)}}
                     className="  px-3 py-2 text-sm cursor-pointer "
                 >
                     Manage Members
