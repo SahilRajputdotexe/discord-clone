@@ -19,27 +19,27 @@ import { useRouter } from 'next/navigation';
 
 
 
-export const LeaveServerModal = () => {
+export const DeleteServerModal = () => {
   const { isOpen ,onClose ,type, data}=useModal();
 
   const router=useRouter();
-  const isModalOpen = isOpen && type === "leaveServer";
+  const isModalOpen = isOpen && type === "deleteServer";
   const {server}=data;  
 
 
   const[isLoading,setIsLoading] = useState(false);
 
-  const handleLeaveServer = async () => {
+  const handleDeleteServer = async () => {
     setIsLoading(true);
     try {
-      await axios.patch(`/api/servers/${server?.id}/leave`);
+      await axios.delete(`/api/servers/${server?.id}`);
 
 
       onClose();
 
       router.refresh();
       router.push("/");
-
+      
     } catch (error) {
       console.log(error);
     } finally {
@@ -54,10 +54,11 @@ export const LeaveServerModal = () => {
       <DialogContent className='bg-white text-black p-0 overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-center text-2xl font-bold text-zinc'>
-          Leave Server
+          Delete Server
           </DialogTitle>
           <DialogDescription className='text-center text-zinc-500'>
-            Are you sure you want to leave <span className='font-semibold text-indigo-500'>{server?.name}</span> ?
+            Are you sure you want to do this? <br/> 
+            <span className='font-semibold text-indigo-500'>{server?.name}</span> will be permanently deleted.
           </DialogDescription>
           
         </DialogHeader>
@@ -71,7 +72,7 @@ export const LeaveServerModal = () => {
             Cancel
           </Button>
           <Button disabled={isLoading}
-          onClick={handleLeaveServer}
+          onClick={handleDeleteServer}
           variant="primary">
             Leave Server
           </Button>

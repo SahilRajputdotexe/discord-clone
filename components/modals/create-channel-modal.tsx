@@ -61,12 +61,14 @@ export const CreateChannelModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit =async(values:z.infer<typeof FormSchema>) => {
     try{
+      console.log("serverid",params?.serveId);
       const url = qs.stringifyUrl({
         url: "/api/channels",
         query: {
-          serverId: params?.serverId,
+          serverId: params?.serveId,
         },
       });
+      console.log(url);
       await axios.post(url,values);
       
       form.reset();
@@ -152,7 +154,7 @@ export const CreateChannelModal = () => {
                 <Button
                 variant="primary"
                 disabled={isLoading}>
-                  Create Server
+                  Create Channel 
                 </Button>
               </DialogFooter>
 
