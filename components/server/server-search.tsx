@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "../ui/command";
 import { CommandGroup, CommandItem } from "cmdk";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 
 interface ServerSearchProps {
@@ -96,8 +96,7 @@ export const ServerSearch =  ({data}:ServerSearchProps) => {
                             {data.map(({id,icon,name})=>{
                                 return(
                                     <CommandItem onSelect={()=>onClick({id,type})} key={id}>
-                                        {icon}
-                                        <span>name</span>
+                                        {icon}<span>{name}</span>
                                     </CommandItem>
                                 )
                             })}
