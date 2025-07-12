@@ -3,8 +3,8 @@
 
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "../ui/command";
-import { CommandGroup, CommandItem } from "cmdk";
+import { CommandDialog, CommandEmpty, CommandInput, CommandList,CommandGroup, CommandItem } from "../ui/command";
+
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 
@@ -93,10 +93,11 @@ export const ServerSearch =  ({data}:ServerSearchProps) => {
                     if(!data?.length) return null;
                     return (
                         <CommandGroup key={label} heading={label}>
-                            {data.map(({id,icon,name})=>{
+                            {data?.map(({id,icon,name})=>{
                                 return(
-                                    <CommandItem onSelect={()=>onClick({id,type})} key={id}>
-                                        {icon}<span>{name}</span>
+                                    <CommandItem onSelect={()=>onClick({id,type})}  key={id}>
+                                        {icon}
+                                        <span>{name}</span>
                                     </CommandItem>
                                 )
                             })}

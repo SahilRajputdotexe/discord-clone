@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-}from '@/components/ui/dialog'
+}from '@/components/ui/dialog'//TODO : add this to the dialog component
 
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from '../ui/button';
@@ -16,7 +16,7 @@ import axios from 'axios';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { useRouter } from 'next/navigation';
 
-
+ 
 
 
 export const LeaveServerModal = () => {
